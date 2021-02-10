@@ -6,9 +6,10 @@
 
     <display-name>Web Application</display-name>
 
+    <!--    Оставил для примера маппинга-->
     <servlet>
         <servlet-name>HelloWorld</servlet-name>
-        <servlet-class>ru.vyazankin.FirstServlet</servlet-class>
+        <servlet-class>ru.vyazankin.servlets.FirstServlet</servlet-class>
     </servlet>
     
     <servlet-mapping>
@@ -16,5 +17,15 @@
         <url-pattern>/helloworld</url-pattern>
     </servlet-mapping>
             
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/page-not-found</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/access-forbidden</location>
+    </error-page>
 
 </web-app>
