@@ -1,4 +1,4 @@
-package ru.vyazankin;
+package ru.vyazankin.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
