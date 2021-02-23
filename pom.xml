@@ -10,6 +10,7 @@
 
     <modules>
         <module>first-web-app</module>
+        <module>first-jsf-app</module>
     </modules>
 
     <packaging>pom</packaging>
