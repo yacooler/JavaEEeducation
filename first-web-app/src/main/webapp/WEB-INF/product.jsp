@@ -53,33 +53,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="product" items="${requestScope.products}">
+                <c:forEach var="currentProduct" items="${requestScope.products}">
 <%--                <% for (Product product : (List<Product>) request.getAttribute("products")) { %>--%>
                 <tr>
                     <th scope="row">
-                        <c:out value="${product.id}"/>
+                        <c:out value="${currentProduct.id}"/>
 <%--                        <%= product.getId() %>--%>
                     </th>
                     <td>
-                        <c:out value="${product.name}"/>
+                        <c:out value="${currentProduct.name}"/>
 <%--                        <%= product.getName() %>--%>
                     </td>
                     <td>
-                        <c:out value="${product.description}"/>
+                        <c:out value="${currentProduct.description}"/>
 <%--                        <%= product.getDescription() %>--%>
                     </td>
                     <td>
-                        <c:out value="${product.price}"/>р.
+                        <c:out value="${currentProduct.price}"/>р.
 <%--                        <%= product.getPrice() %>--%>
                     </td>
                     <td>
                         <c:url value="/product/edit" var="productEditUrl">
-                            <c:param name="id" value="${product.id}"/>
+                            <c:param name="id" value="${currentProduct.id}"/>
                         </c:url>
                         <a class="btn btn-success" href="${productEditUrl}"><i class="fas fa-edit"></i></a>
 
                         <c:url value="/product/delete" var="productDeleteUrl">
-                            <c:param name="id" value="${product.id}"/>
+                            <c:param name="id" value="${currentProduct.id}"/>
                         </c:url>
                         <a class="btn btn-danger" href="${productDeleteUrl}"><i class="far fa-trash-alt"></i></a>
                     </td>
