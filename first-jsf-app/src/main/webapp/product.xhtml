@@ -49,17 +49,16 @@
             <div class="row py-2 mr-3">
                 <h:form id="categoriesListForm" class="col-12">
                     <h:dataTable
-                            value="#{productController.categoryList}" var="currentCategory"
+                            value="#{productController.filteredCategoryList}" var="currentCategory"
                             styleClass="table table-bordered my-2">
-
                         <h:column>
-                            <f:facet name="header">Категории товаров</f:facet>
+                            <f:facet name="header">Категории</f:facet>
                             <h:commandLink action="#{productController.setFilter(currentCategory.id)}">
                                 #{currentCategory.name}
                             </h:commandLink>
                         </h:column>
-
                     </h:dataTable>
+
 
                 </h:form>
             </div>

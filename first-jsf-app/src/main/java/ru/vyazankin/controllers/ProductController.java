@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -30,12 +31,18 @@ public class ProductController implements Serializable {
     @Setter
     private Product product;
 
+    @Getter
+    @Setter
+    private Long currentProductCategoryId;
+
     private List<Product> productList;
     private List<Category> categoryList;
+
     private Long categoryFilterId = 0L;
 
     public String createProduct(){
-        this.product = new Product();
+        product = new Product();
+        currentProductCategoryId = null;
         return "/product_form.xhtml?faces-redirect=true";
     }
 
@@ -47,7 +54,6 @@ public class ProductController implements Serializable {
         }
 
         categoryList = categoryRepository.findAll();
-        categoryList.add(new Category("Все категории"));
 
     }
 
@@ -57,6 +63,7 @@ public class ProductController implements Serializable {
 
     public String editProduct(Product product){
         this.product = product;
+        this.currentProductCategoryId = product.getCategory().getId();
         return "/product_form.xhtml?faces-redirect=true";
     }
 
@@ -66,12 +73,24 @@ public class ProductController implements Serializable {
     }
 
     public String saveProduct(){
+        //Установка или смена категории продукта
+        if (product.getCategory() == null
+                || !product.getCategory().getId().equals(currentProductCategoryId)){
+            product.setCategory(categoryRepository.findById(currentProductCategoryId));
+        }
+
         productRepository.saveOrUpdate(this.product);
         return "/product.xhtml?faces-redirect=true";
     }
 
     public List<Category> getCategoryList(){
         return categoryList;
+    }
+
+    public List<Category> getFilteredCategoryList(){
+        List<Category> result = new ArrayList<>(categoryList);
+        result.add(new Category("Все"));
+        return result;
     }
 
     public void setFilter(Long categoryFilterId){
