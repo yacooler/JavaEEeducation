@@ -1,7 +1,7 @@
 package ru.vyazankin.controllers;
 
 import ru.vyazankin.beans.CartBean;
-import ru.vyazankin.dto.CartItemDto;
+import ru.vyazankin.persists.OrderItem;
 import ru.vyazankin.persists.Product;
 import ru.vyazankin.repositories.ProductRepository;
 
@@ -26,7 +26,7 @@ public class CartController implements Serializable {
         return Collections.unmodifiableList(productRepository.findAll());
     }
 
-    public List<CartItemDto> getCartItemDtoList(){
+    public List<OrderItem> getCartItemDtoList(){
         return cartBean.getCartItems();
     }
 

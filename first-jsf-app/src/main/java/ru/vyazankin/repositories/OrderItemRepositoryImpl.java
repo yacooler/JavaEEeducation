@@ -3,6 +3,8 @@ package ru.vyazankin.repositories;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vyazankin.persists.Order;
+import ru.vyazankin.persists.OrderItem;
 import ru.vyazankin.persists.Product;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Named
 @ApplicationScoped
-public class ProductRepositoryImpl implements ProductRepository {
+public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryImpl.class);
 
@@ -24,39 +26,31 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 
     @Override
-    public Product findById(Long id) {
-        return entityManager.find(Product.class, id);
-    }
-
-    @Override
-    public List<Product> findAll() {
-        return entityManager.createNamedQuery("findAllProducts", Product.class).getResultList();
-
+    public OrderItem findById(Long id) {
+        return entityManager.find(OrderItem.class, id);
     }
 
     @Override
     @Transactional
-    public Product saveOrUpdate(Product product) {
-        if (product.getId() == null) {
-            entityManager.persist(product);
+    public OrderItem saveOrUpdate(OrderItem orderItem) {
+        if (orderItem.getId() == null) {
+            entityManager.persist(orderItem);
         } else {
-            entityManager.merge(product);
+            entityManager.merge(orderItem);
         }
-        return product;
+        return orderItem;
     }
 
     @Override
     @Transactional
-    public void delete(Product product) {
-        entityManager.remove(product);
+    public void delete(OrderItem orderItem) {
+        entityManager.remove(orderItem);
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
-        entityManager.createNamedQuery("deleteProductById")
-                .setParameter("id", id)
-                .executeUpdate();
+        entityManager.createNamedQuery("deleteOrderItemById").setParameter("id", id).executeUpdate();
     }
 
     @Override
