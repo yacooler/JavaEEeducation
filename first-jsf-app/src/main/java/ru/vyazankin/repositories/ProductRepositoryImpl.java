@@ -69,4 +69,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         //return entityManager.createNamedQuery("findAll").setFirstResult(0).setMaxResults(1).getResultList().isEmpty();
         return countAll() == 0;
     }
+
+    @Override
+    public List<Product> findAllByCategoryId(Long category_id) {
+        return entityManager.createNamedQuery("findAllProductsByCategoryId", Product.class)
+                .setParameter("category_id", category_id)
+                .getResultList();
+    }
 }

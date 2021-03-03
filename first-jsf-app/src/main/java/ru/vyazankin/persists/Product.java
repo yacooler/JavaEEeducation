@@ -16,7 +16,8 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "findAllProducts", query = "from Product p"),
         @NamedQuery(name = "deleteProductById", query = "delete from Product p where p.id = :id"),
-        @NamedQuery(name = "countAllProducts", query = "select count(*) from Product p")
+        @NamedQuery(name = "countAllProducts", query = "select count(*) from Product p"),
+        @NamedQuery(name = "findAllProductsByCategoryId", query = "from Product p where p.category.id = :category_id")
 })
 public class Product {
 

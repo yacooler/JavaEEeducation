@@ -2,16 +2,16 @@ package ru.vyazankin.controllers;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.vyazankin.persists.Category;
 import ru.vyazankin.persists.Product;
+import ru.vyazankin.repositories.CategoryRepository;
 import ru.vyazankin.repositories.ProductRepository;
 
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 @Named
@@ -23,11 +23,16 @@ public class ProductController implements Serializable {
     @Inject
     private ProductRepository productRepository;
 
+    @Inject
+    private CategoryRepository categoryRepository;
+
     @Getter
     @Setter
     private Product product;
 
     private List<Product> productList;
+    private List<Category> categoryList;
+    private Long categoryFilterId = 0L;
 
     public String createProduct(){
         this.product = new Product();
@@ -35,7 +40,15 @@ public class ProductController implements Serializable {
     }
 
     public void refreshData(){
-        productList = productRepository.findAll();
+        if (categoryFilterId == 0) {
+            productList = productRepository.findAll();
+        } else {
+            productList = productRepository.findAllByCategoryId(categoryFilterId);
+        }
+
+        categoryList = categoryRepository.findAll();
+        categoryList.add(new Category("Все категории"));
+
     }
 
     public List<Product> getAllProducts(){
@@ -55,6 +68,16 @@ public class ProductController implements Serializable {
     public String saveProduct(){
         productRepository.saveOrUpdate(this.product);
         return "/product.xhtml?faces-redirect=true";
+    }
+
+    public List<Category> getCategoryList(){
+        return categoryList;
+    }
+
+    public void setFilter(Long categoryFilterId){
+        if (categoryFilterId==null) categoryFilterId = 0L;
+        this.categoryFilterId = categoryFilterId;
+        refreshData();
     }
 
 }
