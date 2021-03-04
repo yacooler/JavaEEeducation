@@ -1,7 +1,7 @@
 package ru.vyazankin.beans;
 
 import lombok.Getter;
-import ru.vyazankin.dto.CartItemDto;
+import ru.vyazankin.persists.OrderItem;
 import ru.vyazankin.persists.Product;
 
 import javax.annotation.PostConstruct;
@@ -41,12 +41,11 @@ public class CartBean implements Serializable {
         productsMap.put(product, --count);
     }
 
-    public List<CartItemDto> getCartItems(){
+    public List<OrderItem> getCartItems(){
         return productsMap.entrySet().stream().map(
-                entry -> new CartItemDto(
+                entry -> new OrderItem(
                         entry.getKey(),
-                        entry.getValue(),
-                        entry.getKey().getPrice() * entry.getValue())
+                        entry.getValue())
                 ).collect(Collectors.toList());
     }
 

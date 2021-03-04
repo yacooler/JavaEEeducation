@@ -1,50 +1,71 @@
 package ru.vyazankin.repositories;
 
-import jdk.jfr.Name;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.vyazankin.persists.User;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Named
 @ApplicationScoped
 public class UserRepositoryImpl implements UserRepository {
 
-    private final AtomicLong identity = new AtomicLong(0);
-    private final Map<Long, User> userMap = new ConcurrentHashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
+    @PersistenceContext(unitName = "ds")
+    private EntityManager entityManager;
 
-    @PostConstruct
-    public void init(){
-        this.saveOrUpdate(new User(null, "bob", "100600"));
-        this.saveOrUpdate(new User(null, "bil", "100500"));
-    }
 
     @Override
     public User findById(Long id) {
-        return userMap.get(id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public List<User> findAll(){
-        return List.copyOf(userMap.values());
+        return entityManager.createNamedQuery("findAllUsers", User.class).getResultList();
     }
 
     @Override
+    @Transactional
     public User saveOrUpdate(User user){
-        if (user.getId() == null) user.setId(identity.incrementAndGet());
-        userMap.put(user.getId(), user);
+        if (user.getId() == null) {
+            entityManager.persist(user);
+        } else {
+            entityManager.merge(user);
+        }
         return user;
     }
 
     @Override
-    public void deleteById(Long id) {
-        userMap.remove(id);
+    @Transactional
+    public void delete(User user) {
+        entityManager.remove(user);
     }
 
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        entityManager.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return countAll() == 0;
+    }
+
+    @Override
+    public Long countAll() {
+        return entityManager.createNamedQuery("countAllUsers", Long.class).getSingleResult();
+    }
+
+    @Override
+    public User findByName(String name) {
+        return entityManager.createNamedQuery("findUserByName", User.class).getSingleResult();
+    }
 }
