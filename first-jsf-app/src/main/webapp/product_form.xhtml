@@ -45,7 +45,7 @@
                         <h:inputText
                                 styleClass="form-control"
                                 id="name"
-                                value="#{productController.product.name}"
+                                value="#{productController.productDto.name}"
                                 placeholder="Enter product name"/>
                     </div>
                     <div class="form-group">
@@ -53,7 +53,7 @@
                         <h:inputText
                                 styleClass="form-control"
                                 id="description"
-                                value="#{productController.product.description}"
+                                value="#{productController.productDto.description}"
                                 placeholder="Enter product description"/>
                     </div>
                     <div class="form-group">
@@ -62,7 +62,7 @@
                                 styleClass="form-control"
                                 id="price"
                                 p:type="number"
-                                value="#{productController.product.price}"
+                                value="#{productController.productDto.price}"
                                 placeholder="Enter product price"/>
                     </div>
 
@@ -71,15 +71,12 @@
                         <h:selectOneMenu
                                 styleClass="form-control"
                                 id="categoryId"
-                                value="#{productController.currentProductCategoryId}">
-
+                                value="#{productController.productDto.categoryId}">
                                 <f:selectItems
                                         value="#{productController.categoryList}" var="listItem"
                                         itemValue="#{listItem.id}"
                                         itemLabel="#{listItem.name}"/>
                         </h:selectOneMenu >
-
-
                     </div>
 
                     <h:commandButton value="Submit" styleClass="btn btn-primary"

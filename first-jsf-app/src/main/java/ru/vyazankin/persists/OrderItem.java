@@ -22,6 +22,7 @@ public class OrderItem {
         this.price = product.getPrice() * count;
     }
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

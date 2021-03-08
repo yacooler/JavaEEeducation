@@ -49,12 +49,12 @@
             <div class="row py-2 mr-3">
                 <h:form id="categoriesListForm" class="col-12">
                     <h:dataTable
-                            value="#{productController.filteredCategoryList}" var="currentCategory"
+                            value="#{productController.filteredCategoryList}" var="currentCategoryDto"
                             styleClass="table table-bordered my-2">
                         <h:column>
                             <f:facet name="header">Категории</f:facet>
-                            <h:commandLink action="#{productController.setFilter(currentCategory.id)}">
-                                #{currentCategory.name}
+                            <h:commandLink action="#{productController.setFilter(currentCategoryDto.id)}">
+                                #{currentCategoryDto.name}
                             </h:commandLink>
                         </h:column>
                     </h:dataTable>
@@ -68,32 +68,32 @@
 
                 <h:form id="productListForm" class="col-12">
                     <h:dataTable
-                            value="#{productController.allProducts}" var="currentProduct"
+                            value="#{productController.allProducts}" var="currentProductDto"
                             styleClass="table table-bordered my-2">
 
                         <h:column>
                             <f:facet name="header">Категория</f:facet>
-                            #{currentProduct.category.name}
+                            #{currentProductDto.categoryName}
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Код товара</f:facet>
-                            #{currentProduct.id}
+                            #{currentProductDto.id}
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Наименование товара</f:facet>
-                            #{currentProduct.name}
+                            #{currentProductDto.name}
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Описание товара</f:facet>
-                            #{currentProduct.description}
+                            #{currentProductDto.description}
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">Цена</f:facet>
-                            #{currentProduct.price}
+                            #{currentProductDto.price}
                         </h:column>
 
                         <h:column>
@@ -102,14 +102,14 @@
                             <h:commandButton
                                     value="Edit"
                                     styleClass="btn btn-success"
-                                    action="#{productController.editProduct(currentProduct)}">
+                                    action="#{productController.editProduct(currentProductDto)}">
                                 <f:ajax render="productListForm" event="click"/>
                             </h:commandButton>
 
                             <h:commandButton
                                     value="Delete"
                                     styleClass="btn btn-danger"
-                                    action="#{productController.deleteProduct(currentProduct)}">
+                                    action="#{productController.deleteProduct(currentProductDto)}">
                                 <f:ajax render="productListForm" event="click"/>
                             </h:commandButton>
 

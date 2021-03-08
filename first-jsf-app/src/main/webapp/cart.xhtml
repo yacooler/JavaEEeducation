@@ -37,30 +37,30 @@
 <div class="container">
     <div class="row py-2">
 
-        <h2>Pruducts in the store</h2>
+        <h2>Products in the store</h2>
         <h:form id = "productListForm" class="col-12">
             <h:dataTable
-                    value="#{cartController.allProducts}" var="currentProduct"
+                    value="#{cartController.allProducts}" var="currentProductDto"
                     styleClass="table table-bordered my-2">
 
                 <h:column>
                     <f:facet name="header">Id</f:facet>
-                    #{currentProduct.id}
+                    #{currentProductDto.id}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{currentProduct.name}
+                    #{currentProductDto.name}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">Description</f:facet>
-                    #{currentProduct.description}
+                    #{currentProductDto.description}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">Price</f:facet>
-                    #{currentProduct.price}
+                    #{currentProductDto.price}
                 </h:column>
 
                 <h:column>
@@ -69,14 +69,14 @@
                     <h:commandButton
                             value="-"
                             styleClass="btn btn-primary  mx-2"
-                            action="#{cartController.removeProductFromCart(currentProduct)}">
+                            action="#{cartController.removeProductFromCart(currentProductDto.id)}">
                         <f:ajax render="cartItemsForm" event="click"/>
                     </h:commandButton>
 
                     <h:commandButton
                             value="+"
                             styleClass="btn btn-primary mx-2"
-                            action="#{cartController.addProductToCart(currentProduct)}">
+                            action="#{cartController.addProductToCart(currentProductDto.id)}">
                         <f:ajax render="cartItemsForm" event="click"/>
                     </h:commandButton>
 
@@ -88,7 +88,7 @@
             </h:dataTable>
         </h:form>
 
-        <h2>Pruducts in the cart</h2>
+        <h2>Products in the cart</h2>
         <h:form id = "cartItemsForm" class="col-12">
             <h:dataTable
                     value="#{cartController.cartItemDtoList}" var="currentCartItemDto"
@@ -96,7 +96,7 @@
 
                 <h:column>
                     <f:facet name="header">Product name</f:facet>
-                    #{currentCartItemDto.product.name}
+                    #{currentCartItemDto.productName}
                 </h:column>
 
                 <h:column>
@@ -110,7 +110,7 @@
                     <h:commandButton
                             value="-"
                             styleClass="btn btn-primary"
-                            action="#{cartController.removeProductFromCart(currentCartItemDto.product)}">
+                            action="#{cartController.removeProductFromCart(currentCartItemDto.productId)}">
                         <f:ajax render="cartItemsForm" event="click"/>
                     </h:commandButton>
                 </h:column>
@@ -125,7 +125,7 @@
                     <h:commandButton
                             value="+"
                             styleClass="btn btn-primary"
-                            action="#{cartController.addProductToCart(currentCartItemDto.product)}">
+                            action="#{cartController.addProductToCart(currentCartItemDto.productId)}">
                         <f:ajax render="cartItemsForm" event="click"/>
                     </h:commandButton>
                 </h:column>

@@ -1,15 +1,17 @@
 package ru.vyazankin.controllers;
 
-import ru.vyazankin.beans.CartBean;
+import ru.vyazankin.dto.OrderItemDto;
+import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.services.CartService;
+import ru.vyazankin.services.CartServiceImpl;
 import ru.vyazankin.persists.OrderItem;
 import ru.vyazankin.persists.Product;
-import ru.vyazankin.repositories.ProductRepository;
+import ru.vyazankin.services.ProductService;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 @Named
@@ -17,25 +19,26 @@ import java.util.List;
 public class CartController implements Serializable {
     static final long serialVersionUID = -5202128868518620640L;
 
-    @Inject
-    private CartBean cartBean;
-    @Inject
-    private ProductRepository productRepository;
+    @EJB
+    private CartService cartService;
 
-    public List<Product> getAllProducts(){
-        return Collections.unmodifiableList(productRepository.findAll());
+    @EJB
+    private ProductService productService;
+
+    public List<ProductDto> getAllProducts(){
+        return productService.findAll();
     }
 
-    public List<OrderItem> getCartItemDtoList(){
-        return cartBean.getCartItems();
+    public List<OrderItemDto> getCartItemDtoList(){
+        return cartService.getCartItems();
     }
 
-    public void addProductToCart(Product product){
-        cartBean.addProduct(product);
+    public void addProductToCart(Long productId){
+        cartService.addProduct(productId);
     }
 
-    public void removeProductFromCart(Product product){
-        cartBean.removeProduct(product);
+    public void removeProductFromCart(Long productId){
+        cartService.removeProduct(productId);
     }
 
 

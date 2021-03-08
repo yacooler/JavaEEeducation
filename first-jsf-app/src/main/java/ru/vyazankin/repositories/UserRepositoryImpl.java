@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyazankin.persists.User;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -11,8 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Named
-@ApplicationScoped
+@Stateless
 public class UserRepositoryImpl implements UserRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
@@ -32,7 +32,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    @Transactional
     public User saveOrUpdate(User user){
         if (user.getId() == null) {
             entityManager.persist(user);
@@ -43,13 +42,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    @Transactional
     public void delete(User user) {
         entityManager.remove(user);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         entityManager.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
     }
@@ -67,5 +64,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByName(String name) {
         return entityManager.createNamedQuery("findUserByName", User.class).getSingleResult();
+    }
+
+    @Override
+    public User getReference(Long id) {
+        return entityManager.getReference(User.class, id);
     }
 }

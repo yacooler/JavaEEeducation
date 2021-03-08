@@ -7,6 +7,7 @@ import ru.vyazankin.persists.Order;
 import ru.vyazankin.persists.OrderItem;
 import ru.vyazankin.persists.Product;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -15,8 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Named
-@ApplicationScoped
+@Stateless
 public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryImpl.class);
@@ -31,7 +31,6 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    @Transactional
     public OrderItem saveOrUpdate(OrderItem orderItem) {
         if (orderItem.getId() == null) {
             entityManager.persist(orderItem);
@@ -42,13 +41,11 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    @Transactional
     public void delete(OrderItem orderItem) {
         entityManager.remove(orderItem);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         entityManager.createNamedQuery("deleteOrderItemById").setParameter("id", id).executeUpdate();
     }

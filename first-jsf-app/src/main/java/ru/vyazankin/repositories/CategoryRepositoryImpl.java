@@ -5,16 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyazankin.persists.Category;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Named
-@ApplicationScoped
+@Stateless
 public class CategoryRepositoryImpl implements CategoryRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepositoryImpl.class);
@@ -63,5 +61,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public boolean isEmpty() {
         return countAll() == 0;
+    }
+
+    @Override
+    public Category getReference(Long id) {
+        return entityManager.getReference(Category.class, id);
     }
 }
