@@ -2,19 +2,15 @@ package ru.vyazankin.controllers;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.vyazankin.dto.CategoryDto;
-import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.common.dto.CategoryDto;
+import ru.vyazankin.common.dto.ProductDto;
 import ru.vyazankin.persists.Category;
-import ru.vyazankin.persists.Product;
-import ru.vyazankin.repositories.CategoryRepository;
-import ru.vyazankin.repositories.ProductRepository;
 import ru.vyazankin.services.CategoryService;
 import ru.vyazankin.services.ProductService;
 
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;

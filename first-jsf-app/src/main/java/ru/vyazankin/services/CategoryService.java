@@ -1,6 +1,6 @@
 package ru.vyazankin.services;
 
-import ru.vyazankin.dto.CategoryDto;
+import ru.vyazankin.common.dto.CategoryDto;
 import ru.vyazankin.persists.Category;
 
 import javax.ejb.Local;

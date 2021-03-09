@@ -3,7 +3,6 @@ package ru.vyazankin.repositories;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vyazankin.persists.Category;
 import ru.vyazankin.persists.Product;
 
 import javax.ejb.Stateless;

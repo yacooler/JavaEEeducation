@@ -1,6 +1,6 @@
 package ru.vyazankin.services;
 
-import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.common.dto.ProductDto;
 import ru.vyazankin.persists.Product;
 
 import javax.ejb.Local;

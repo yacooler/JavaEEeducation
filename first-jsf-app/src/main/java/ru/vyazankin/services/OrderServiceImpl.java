@@ -1,6 +1,6 @@
 package ru.vyazankin.services;
 
-import ru.vyazankin.dto.OrderDto;
+import ru.vyazankin.common.dto.OrderDto;
 import ru.vyazankin.persists.Order;
 import ru.vyazankin.repositories.OrderRepository;
 import ru.vyazankin.repositories.UserRepository;

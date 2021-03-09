@@ -84,6 +84,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--Общие файлы собственной разработки-->
+        <dependency>
+            <groupId>ru.vyazankin</groupId>
+            <artifactId>app-common-classes</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

@@ -1,4 +1,4 @@
-package ru.vyazankin.dto;
+package ru.vyazankin.common.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

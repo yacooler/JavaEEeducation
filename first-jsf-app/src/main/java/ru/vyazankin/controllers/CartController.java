@@ -1,11 +1,8 @@
 package ru.vyazankin.controllers;
 
-import ru.vyazankin.dto.OrderItemDto;
-import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.common.dto.OrderItemDto;
+import ru.vyazankin.common.dto.ProductDto;
 import ru.vyazankin.services.CartService;
-import ru.vyazankin.services.CartServiceImpl;
-import ru.vyazankin.persists.OrderItem;
-import ru.vyazankin.persists.Product;
 import ru.vyazankin.services.ProductService;
 
 import javax.ejb.EJB;

@@ -1,52 +1,47 @@
 package ru.vyazankin.services;
 
 
-import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.common.dto.ProductDto;
+import ru.vyazankin.common.services.ProductServiceRemote;
+import ru.vyazankin.mappers.ProductMapper;
 import ru.vyazankin.persists.Product;
-import ru.vyazankin.repositories.CategoryRepository;
 import ru.vyazankin.repositories.ProductRepository;
 
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
+
 @Stateless
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService, ProductServiceRemote {
 
     @EJB
     private ProductRepository productRepository;
 
     @EJB
-    private CategoryRepository categoryRepository;
+    private ProductMapper productMapper;
 
     @Override
     public ProductDto findById(Long id) {
-        return new ProductDto(productRepository.findById(id));
+        return productMapper.toDto(productRepository.findById(id));
     }
 
     @Override
     public List<ProductDto> findAll() {
-        return productRepository.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
+        return productRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
     }
 
 
     @TransactionAttribute
     @Override
     public ProductDto saveOrUpdate(ProductDto t) {
-
-        Product product = new Product(
-                t.getId(),
-                t.getName(),
-                t.getDescription(),
-                t.getPrice(),
-                categoryRepository.getReference(t.getCategoryId()));
-
+        Product product = productMapper.toEntity(t);
         productRepository.saveOrUpdate(product);
-
-        return new ProductDto(product);
+        return productMapper.toDto(product);
     }
 
     @TransactionAttribute
@@ -73,6 +68,6 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductDto> findAllByCategoryId(Long categoryId) {
-        return productRepository.findAllByCategoryId(categoryId).stream().map(ProductDto::new).collect(Collectors.toList());
+        return productRepository.findAllByCategoryId(categoryId).stream().map(productMapper::toDto).collect(Collectors.toList());
     }
 }

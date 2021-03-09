@@ -1,7 +1,6 @@
 package ru.vyazankin.services;
 
-import ru.vyazankin.dto.OrderItemDto;
-import ru.vyazankin.dto.ProductDto;
+import ru.vyazankin.common.dto.OrderItemDto;
 
 import javax.ejb.Local;
 import java.util.List;
