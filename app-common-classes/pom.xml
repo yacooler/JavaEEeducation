@@ -5,17 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.vyazankin</groupId>
-    <artifactId>JavaEEeducation</artifactId>
+    <artifactId>app-common-classes</artifactId>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-
-    <modules>
-        <module>first-web-app</module>
-        <module>first-jsf-app</module>
-        <module>remote-client</module>
-        <module>app-common-classes</module>
-    </modules>
-
-    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
@@ -27,6 +19,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <version>2.0.0.Final</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

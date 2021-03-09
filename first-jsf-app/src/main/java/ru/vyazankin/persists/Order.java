@@ -20,6 +20,11 @@ import java.util.List;
 })
 public class Order {
 
+    public Order(Long id, User user) {
+        this.id = id;
+        this.user = user;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

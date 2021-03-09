@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 
 @Entity
 @Table(name = "category")
@@ -22,6 +21,11 @@ import java.util.List;
 public class Category {
 
     public Category(String name) {
+        Name = name;
+    }
+
+    public Category(Long id, String name) {
+        this.id = id;
         Name = name;
     }
 

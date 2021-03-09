@@ -2,14 +2,15 @@ package ru.vyazankin.controllers;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.vyazankin.common.dto.CategoryDto;
+import ru.vyazankin.common.dto.ProductDto;
 import ru.vyazankin.persists.Category;
-import ru.vyazankin.persists.Product;
-import ru.vyazankin.repositories.CategoryRepository;
-import ru.vyazankin.repositories.ProductRepository;
+import ru.vyazankin.services.CategoryService;
+import ru.vyazankin.services.ProductService;
 
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,75 +22,63 @@ public class ProductController implements Serializable {
 
     static final long serialVersionUID = -5455871471998158070L;
 
-    @Inject
-    private ProductRepository productRepository;
+    @EJB
+    private ProductService productService;
 
-    @Inject
-    private CategoryRepository categoryRepository;
-
-    @Getter
-    @Setter
-    private Product product;
+    @EJB
+    private CategoryService categoryService;
 
     @Getter
     @Setter
-    private Long currentProductCategoryId;
+    private ProductDto productDto;
 
-    private List<Product> productList;
-    private List<Category> categoryList;
+
+    private List<ProductDto> productList;
+    private List<CategoryDto> categoryList;
 
     private Long categoryFilterId = 0L;
 
     public String createProduct(){
-        product = new Product();
-        currentProductCategoryId = null;
+        productDto = new ProductDto();
         return "/product_form.xhtml?faces-redirect=true";
     }
 
     public void refreshData(){
         if (categoryFilterId == 0) {
-            productList = productRepository.findAll();
+            productList = productService.findAll();
         } else {
-            productList = productRepository.findAllByCategoryId(categoryFilterId);
+            productList = productService.findAllByCategoryId(categoryFilterId);
         }
-
-        categoryList = categoryRepository.findAll();
-
+        categoryList = categoryService.findAll();
     }
 
-    public List<Product> getAllProducts(){
+    public List<ProductDto> getAllProducts(){
         return productList;
     }
 
-    public String editProduct(Product product){
-        this.product = product;
-        this.currentProductCategoryId = product.getCategory().getId();
+    public String editProduct(ProductDto productDto){
+        this.productDto = productDto;
         return "/product_form.xhtml?faces-redirect=true";
     }
 
-    public void deleteProduct(Product product){
-        productRepository.deleteById(product.getId());
+    public void deleteProduct(ProductDto productDto){
+        productService.deleteById(productDto.getId());
         //return "/product.xhtml";
     }
 
     public String saveProduct(){
         //Установка или смена категории продукта
-        if (product.getCategory() == null
-                || !product.getCategory().getId().equals(currentProductCategoryId)){
-            product.setCategory(categoryRepository.findById(currentProductCategoryId));
-        }
-
-        productRepository.saveOrUpdate(this.product);
+        productService.saveOrUpdate(this.productDto);
         return "/product.xhtml?faces-redirect=true";
     }
 
-    public List<Category> getCategoryList(){
+    public List<CategoryDto> getCategoryList(){
         return categoryList;
     }
 
-    public List<Category> getFilteredCategoryList(){
-        List<Category> result = new ArrayList<>(categoryList);
-        result.add(new Category("Все"));
+    public List<CategoryDto> getFilteredCategoryList(){
+        List<CategoryDto> result = new ArrayList<>(categoryList);
+        result.add(new CategoryDto(new Category("Все")));
         return result;
     }
 

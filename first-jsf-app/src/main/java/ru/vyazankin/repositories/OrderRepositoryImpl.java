@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import ru.vyazankin.persists.Order;
 
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -14,8 +15,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Named
-@ApplicationScoped
+@Stateless
 public class OrderRepositoryImpl implements OrderRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepositoryImpl.class);
@@ -34,7 +34,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order saveOrUpdate(Order order) {
         if (order.getId() == null){
             entityManager.persist(order);
@@ -45,13 +44,11 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public void delete(Order order) {
         entityManager.remove(order);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         entityManager.createNamedQuery("deleteOrderById").setParameter("id", id).executeUpdate();
     }
@@ -69,5 +66,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> findAllByUserId(Long id) {
         return entityManager.createNamedQuery("findAllOrdersByUserId", Order.class).setParameter("user_id", id).getResultList();
+    }
+
+    @Override
+    public Order getReference(Long id) {
+        return entityManager.getReference(Order.class, id);
     }
 }

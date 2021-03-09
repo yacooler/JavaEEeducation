@@ -9,4 +9,5 @@ public interface BaseRepository<T> {
     void delete(T t);
     boolean isEmpty();
     Long countAll();
+    default T getReference(Long id){throw new UnsupportedOperationException("Операция получения ссылки не определена для данной сущности");}
 }

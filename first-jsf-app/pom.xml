@@ -68,6 +68,7 @@
             <scope>provided</scope>
         </dependency>
 
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -75,8 +76,20 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--EJB-->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <version>2.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
 
-
+        <!--Общие файлы собственной разработки-->
+        <dependency>
+            <groupId>ru.vyazankin</groupId>
+            <artifactId>app-common-classes</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

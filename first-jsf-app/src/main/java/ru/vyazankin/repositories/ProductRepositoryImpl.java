@@ -5,16 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyazankin.persists.Product;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Named
-@ApplicationScoped
+@Stateless
 public class ProductRepositoryImpl implements ProductRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryImpl.class);
@@ -35,7 +32,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    @Transactional
     public Product saveOrUpdate(Product product) {
         if (product.getId() == null) {
             entityManager.persist(product);
@@ -46,13 +42,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    @Transactional
     public void delete(Product product) {
         entityManager.remove(product);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         entityManager.createNamedQuery("deleteProductById")
                 .setParameter("id", id)
@@ -66,14 +60,18 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean isEmpty(){
-        //return entityManager.createNamedQuery("findAll").setFirstResult(0).setMaxResults(1).getResultList().isEmpty();
         return countAll() == 0;
     }
 
     @Override
-    public List<Product> findAllByCategoryId(Long category_id) {
+    public List<Product> findAllByCategoryId(Long categoryId) {
         return entityManager.createNamedQuery("findAllProductsByCategoryId", Product.class)
-                .setParameter("category_id", category_id)
+                .setParameter("category_id", categoryId)
                 .getResultList();
+    }
+
+    @Override
+    public Product getReference(Long id) {
+        return entityManager.getReference(Product.class, id);
     }
 }
