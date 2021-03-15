@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 
 @Stateless
+@Remote(value = {ProductServiceRemote.class})
 public class ProductServiceImpl implements ProductService, ProductServiceRemote {
 
     @EJB
