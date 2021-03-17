@@ -6,7 +6,7 @@ import javax.naming.NamingException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class MainApp {
+public class EjbClient {
 
 
     public static void main(String[] args) throws IOException, NamingException {
@@ -21,7 +21,7 @@ public class MainApp {
 
     public static Context createInitialContext() throws IOException, NamingException {
         final Properties env = new Properties();
-        env.load(MainApp.class.getClassLoader().getResourceAsStream("wildfly-jndi.properties"));
+        env.load(EjbClient.class.getClassLoader().getResourceAsStream("wildfly-jndi.properties"));
         return new InitialContext(env);
     }
 }
