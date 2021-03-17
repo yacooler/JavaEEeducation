@@ -3,6 +3,7 @@ package ru.vyazankin.services;
 import ru.vyazankin.common.dto.CategoryDto;
 import ru.vyazankin.persists.Category;
 import ru.vyazankin.repositories.CategoryRepository;
+import ru.vyazankin.rest.CategoryServiceRest;
 
 
 import javax.ejb.EJB;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService, CategoryServiceRest {
 
     @EJB
     private CategoryRepository categoryRepository;
@@ -54,5 +55,15 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Long countAll() {
         return categoryRepository.countAll();
+    }
+
+    @Override
+    public CategoryDto insert(CategoryDto categoryDto) {
+        return saveOrUpdate(categoryDto);
+    }
+
+    @Override
+    public CategoryDto update(CategoryDto categoryDto) {
+        return saveOrUpdate(categoryDto);
     }
 }

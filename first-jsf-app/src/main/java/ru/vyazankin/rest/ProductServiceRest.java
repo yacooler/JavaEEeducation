@@ -33,16 +33,13 @@ public interface ProductServiceRest extends BaseService<Product, ProductDto> {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     ProductDto insert(ProductDto t);
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     ProductDto update(ProductDto t);
-
-    @Override
-    @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    void deleteById(Long id);
 
     @Override
     @DELETE
