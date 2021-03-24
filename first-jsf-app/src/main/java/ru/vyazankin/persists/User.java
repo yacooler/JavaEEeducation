@@ -14,8 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = "findAllUsers", query = "from User u"),
-        @NamedQuery(name = "countAllUsers", query = "select count(*) from User u"),
+        @NamedQuery(name = "findAllUsers",   query = "from User u"),
+        @NamedQuery(name = "countAllUsers",  query = "select count(*) from User u"),
         @NamedQuery(name = "findUserByName", query = "from User u where name = :name"),
         @NamedQuery(name = "deleteUserById", query = "delete from User u where u.id = :id")
 })
