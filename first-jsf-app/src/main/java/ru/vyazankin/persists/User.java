@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,14 +21,32 @@ import javax.persistence.*;
 })
 public class User {
 
+
+    public User(Long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "username")
-    String name;
+    private String name;
 
     @Column(name = "password")
-    String password;
+    private String password;
+
+
+
+    @ManyToMany(cascade = {
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 }

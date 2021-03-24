@@ -6,6 +6,7 @@ import ru.vyazankin.common.services.ProductServiceRemote;
 import ru.vyazankin.mappers.ProductMapper;
 import ru.vyazankin.persists.Product;
 import ru.vyazankin.repositories.ProductRepository;
+import ru.vyazankin.rest.ProductServiceRest;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @Remote(value = {ProductServiceRemote.class})
-public class ProductServiceImpl implements ProductService, ProductServiceRemote {
+public class ProductServiceImpl implements ProductService, ProductServiceRemote, ProductServiceRest {
 
     @EJB
     private ProductRepository productRepository;
@@ -35,7 +36,6 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     public List<ProductDto> findAll() {
         return productRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
     }
-
 
     @TransactionAttribute
     @Override
@@ -70,5 +70,15 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     @Override
     public List<ProductDto> findAllByCategoryId(Long categoryId) {
         return productRepository.findAllByCategoryId(categoryId).stream().map(productMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto insert(ProductDto t) {
+        return saveOrUpdate(t);
+    }
+
+    @Override
+    public ProductDto update(ProductDto t) {
+        return saveOrUpdate(t);
     }
 }
