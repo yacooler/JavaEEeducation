@@ -1,5 +1,6 @@
 package ru.vyazankin.repositories;
 
+import ru.vyazankin.persists.Role;
 import ru.vyazankin.persists.User;
 
 import java.util.List;

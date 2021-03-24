@@ -63,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByName(String name) {
-        return entityManager.createNamedQuery("findUserByName", User.class).getSingleResult();
+        return entityManager.createNamedQuery("findUserByName", User.class).setParameter("name", name).getSingleResult();
     }
 
     @Override
