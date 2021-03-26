@@ -1,8 +1,7 @@
 <html lang="en"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <!-- Required meta tags -->
@@ -18,11 +17,72 @@
 
 <h:body>
 
+    <f:event listener="#{userController.refreshData()}" type="preRenderView"/>
+
     <ui:include src="/WEB-INF/fragments/navmenu.xhtml">
         <ui:param name="pageName" value="Manage users"/>
     </ui:include>
 
-    <h1>MANAGE USERS</h1>
+    <div class="container">
+
+        <div class="d-flex align-items-stretch">
+            <!--Users-->
+            <div class="row py-2">
+
+                <h:form id="userListForm" class="col-12">
+                    <h:dataTable
+                            value="#{userController.userList}" var="currentUserDto"
+                            styleClass="table table-bordered my-2">
+
+                        <h:column>
+                            <f:facet name="header">Имя пользователя</f:facet>
+                            #{currentUserDto.name}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Присвоенные роли</f:facet>
+                            #{currentUserDto.roles}
+                        </h:column>
+
+
+                        <h:column>
+
+                            <f:facet name="header">Действия</f:facet>
+                            <div class="row px-2">
+                                <h:commandButton
+                                        value="Edit user"
+                                        styleClass="btn btn-success mx-2"
+                                        action="#{userController.editUser(currentUserDto)}">
+                                    <f:ajax render="userListForm" event="click"/>
+                                </h:commandButton>
+
+                                <h:commandButton
+                                        value="Edit roles"
+                                        styleClass="btn btn-success mx-2"
+                                        action="#{userController.editUserRoles(currentUserDto)}">
+                                    <f:ajax render="userListForm" event="click"/>
+                                </h:commandButton>
+
+                                <h:commandButton
+                                        value="Delete"
+                                        styleClass="btn btn-danger mx-2"
+                                        action="#{userController.deleteUser(currentUserDto)}">
+                                    <f:ajax render="userListForm" event="click"/>
+                                </h:commandButton>
+                            </div>
+
+                        </h:column>
+
+
+                    </h:dataTable>
+
+
+                </h:form>
+
+            </div>
+        </div>
+    </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

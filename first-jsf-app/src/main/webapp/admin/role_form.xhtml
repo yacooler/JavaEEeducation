@@ -1,8 +1,8 @@
 <html lang="en"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <!-- Required meta tags -->
@@ -18,11 +18,32 @@
 
 <h:body>
 
-    <ui:include src="/WEB-INF/fragments/navmenu.xhtml">
-        <ui:param name="pageName" value="Manage users"/>
-    </ui:include>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">EShop</a>
 
-    <h1>MANAGE USERS</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </nav>
+
+    <div class="container">
+        <div class="row py-2">
+            <div class="col-12">
+                <!--Roles-->
+                    <h:form id="userRolesListForm" class="col-12">
+                        <h:selectManyCheckbox value="#{userController.userRoleDto.roleEntities}">
+                            <f:selectItems value="#{userController.userRoleDto.roleEntities}" var="ce" itemLabel="#{ce.name}" itemValue="#{ce.checked}" />
+                            <br></br>
+                        </h:selectManyCheckbox>
+                    </h:form>
+
+
+
+            </div>
+        </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -35,6 +56,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
 </h:body>
 
 </html>
