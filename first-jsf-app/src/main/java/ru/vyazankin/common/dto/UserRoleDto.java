@@ -15,12 +15,12 @@ public class UserRoleDto {
     List<RoleEntity> roleEntities = new ArrayList<>();
 
     public UserRoleDto(UserDto userDto, List<Role> possibleRoles) {
-        for (Role r : possibleRoles) {
+        for (Role cr : possibleRoles) {
             roleEntities.add(new RoleEntity(
-                    r.getId(),
-                    r.getName(),
-                    userDto.getRolesList().contains(r))
-            );
+                    cr.getId(),
+                    cr.getName(),
+                    userDto.getRolesList().stream().anyMatch(r -> r.getName().equals(cr.getName())))
+                );
         }
     }
 

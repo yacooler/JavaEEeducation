@@ -64,6 +64,8 @@ public class BootstrapListener implements ServletContextListener {
             logger.info("Role repository is empty! Adding rows");
             roleRepository.saveOrUpdate(new Role(null, "ADMIN"));
             roleRepository.saveOrUpdate(new Role(null, "USER"));
+            roleRepository.saveOrUpdate(new Role(null, "GUEST"));
+            roleRepository.saveOrUpdate(new Role(null, "EDITOR"));
         }
 
         logger.info("Check User repository");

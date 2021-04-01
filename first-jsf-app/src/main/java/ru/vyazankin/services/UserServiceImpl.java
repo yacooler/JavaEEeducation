@@ -29,11 +29,12 @@ public class UserServiceImpl implements UserService{
     public UserDto saveOrUpdate(UserDto t) {
         User user;
         if (t.getId() == null){
-            user = new User(t.getId(), t.getName(), t.getPassword());
+            user = new User(t.getId(), t.getName(), t.getPassword(), t.getRolesList());
         } else {
             user = userRepository.findById(t.getId());
             user.setName(t.getName());
             user.setPassword(t.getPassword());
+            user.setRoles(t.getRolesList());
         }
         return new UserDto(userRepository.saveOrUpdate(user));
     }

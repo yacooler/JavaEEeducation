@@ -33,10 +33,27 @@
             <div class="col-12">
                 <!--Roles-->
                     <h:form id="userRolesListForm" class="col-12">
-                        <h:selectManyCheckbox value="#{userController.userRoleDto.roleEntities}">
-                            <f:selectItems value="#{userController.userRoleDto.roleEntities}" var="ce" itemLabel="#{ce.name}" itemValue="#{ce.checked}" />
-                            <br></br>
-                        </h:selectManyCheckbox>
+
+
+                        <h:dataTable
+                                value="#{userController.userRoleDto.roleEntities}" var="currentRole"
+                                styleClass="table table-bordered my-2">
+
+                            <h:column>
+                                <f:facet name="header">Роль</f:facet>
+                                #{currentRole.name}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="rolechecked">Установить</f:facet>
+                                <h:selectBooleanCheckbox value="#{currentRole.checked}"/>
+                            </h:column>
+
+                        </h:dataTable>
+
+                        <h:commandButton value="Submit" styleClass="btn btn-primary"
+                                         action="#{userController.saveUserRoles()}"/>
+
                     </h:form>
 
 

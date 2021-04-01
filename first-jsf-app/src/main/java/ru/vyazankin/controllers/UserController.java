@@ -89,4 +89,29 @@ public class UserController implements Serializable {
         userService.saveOrUpdate(userDto);
         return "/admin/manage_users.xhtml?faces-redirect=true";
     }
+
+    //Сохраняем измененные пользовательские роли
+    public String saveUserRoles(){
+
+        //Пробегаем по каждой роли и убираем или добавляем её в список ролей пользователя
+        for (UserRoleDto.RoleEntity roleEntity: this.userRoleDto.getRoleEntities()) {
+            //Если роли не было, но её установили
+            if (roleEntity.getChecked() && !ckeckRole(roleEntity.getName())){
+                userDto.getRolesList().add(roleRepository.getReference(roleEntity.getId()));
+                userService.saveOrUpdate(userDto);
+            //Если роли не было, но её установили
+            } else if(!roleEntity.getChecked() && ckeckRole(roleEntity.getName())){
+                userDto.getRolesList().removeIf(role -> role.getName().equals(roleEntity.getName()));
+                userService.saveOrUpdate(userDto);
+            }
+        }
+
+        return "/admin/manage_users.xhtml?faces-redirect=true";
+    }
+
+    //Проверка, есть ли у пользователя userDto роль name
+    private boolean ckeckRole(String roleName){
+        return userDto.getRolesList().stream().anyMatch(role -> role.getName().equals(roleName));
+    }
+
 }
